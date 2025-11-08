@@ -22,7 +22,7 @@ Create a `.env.local` file in the root directory:
 
 ```env
 BLOB_READ_WRITE_TOKEN=your_vercel_blob_token_here
-ABLY_API_KEY=your_ably_api_key_here
+NEXT_PUBLIC_ABLY_API_KEY=your_ably_api_key_here
 ```
 
 **Get your tokens:**
@@ -57,7 +57,7 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
    - Import your GitHub repository
    - Add environment variables:
      - `BLOB_READ_WRITE_TOKEN` - Your Vercel Blob token
-     - `ABLY_API_KEY` - Your Ably API key (if using)
+     - `NEXT_PUBLIC_ABLY_API_KEY` - Your Ably API key (if using)
    - Click "Deploy"
 
 ### Option 2: Deploy via Vercel CLI
