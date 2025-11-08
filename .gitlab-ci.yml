@@ -1,0 +1,86 @@
+# GitLab CI/CD Pipeline for PTT2
+# This file is optional - only use if you're using GitLab instead of GitHub
+
+image: node:20
+
+stages:
+  - install
+  - lint
+  - type-check
+  - build
+  - deploy
+
+cache:
+  paths:
+    - node_modules/
+
+variables:
+  NODE_VERSION: "20"
+
+before_script:
+  - npm ci
+
+install_dependencies:
+  stage: install
+  script:
+    - npm ci
+  only:
+    - main
+    - develop
+    - merge_requests
+
+lint:
+  stage: lint
+  script:
+    - npm run lint
+  only:
+    - main
+    - develop
+    - merge_requests
+
+type_check:
+  stage: type-check
+  script:
+    - npm run type-check
+  only:
+    - main
+    - develop
+    - merge_requests
+
+build:
+  stage: build
+  script:
+    - npm run build
+  environment:
+    name: production
+  only:
+    - main
+  artifacts:
+    paths:
+      - .next/
+    expire_in: 1 hour
+
+build_preview:
+  stage: build
+  script:
+    - npm run build
+  environment:
+    name: preview
+  only:
+    - merge_requests
+  artifacts:
+    paths:
+      - .next/
+    expire_in: 1 hour
+
+# Uncomment and configure if deploying to Vercel via GitLab
+# deploy_vercel:
+#   stage: deploy
+#   image: node:20
+#   script:
+#     - npm install -g vercel
+#     - vercel --prod --token=$VERCEL_TOKEN
+#   only:
+#     - main
+#   when: manual
+
